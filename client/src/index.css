@@ -1,0 +1,178 @@
+@import 'tailwindcss';
+
+/* Theme (previously in tailwind.config.js) */
+@theme {
+  --color-brand-green: #3F7D1D;      /* primary accent (buttons, links, highlights) */
+  --color-brand-greenDark: #1A4413;  /* logo dark green — gradient end */
+  --color-brand-lime: #ACC625;       /* logo lime — accents on dark backgrounds only */
+  --color-brand-cream: #FDFDE3;      /* logo cream — section washes */
+  --color-brand-creamDeep: #EDEFCE;  /* deeper cream — icon tiles, borders */
+  --color-brand-dark: #12200C;       /* footer / dark sections */
+  --color-brand-darker: #0A1407;     /* top bar */
+
+  /* Tailwind 3 shades for the default colours used on the site */
+  --color-green-50: #f0fdf4;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-red-600: #dc2626;
+
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --shadow-soft: 0 10px 40px -12px rgba(0,0,0,0.15);
+  --shadow-glow: 0 0 40px -8px rgba(63,125,29,0.45);
+  --shadow-card: 0 20px 50px -20px rgba(0,0,0,0.25);
+
+  --animate-fadeUp: fadeUp 0.7s ease-out forwards;
+  --animate-floaty: floaty 5s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  --animate-pulseRing: pulseRing 1.8s ease-out infinite;
+
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes pulseRing {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+}
+
+@utility bg-brand-gradient {
+  background-image: linear-gradient(135deg, #3F7D1D 0%, #1A4413 100%);
+}
+@utility bg-lime-gradient {
+  background-image: linear-gradient(135deg, #ACC625 0%, #7CB518 100%);
+}
+@utility bg-dark-gradient {
+  background-image: linear-gradient(135deg, #1E3315 0%, #0A1407 100%);
+}
+
+/* Keep the Tailwind 3 defaults this design was built with */
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+  input::placeholder, textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+  button:not(:disabled), [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-body text-gray-700 bg-white antialiased;
+  margin: 0;
+}
+
+/* Section heading */
+.section-title {
+  @apply font-heading font-bold text-3xl md:text-4xl lg:text-[2.75rem] leading-tight md:leading-10 text-brand-dark;
+}
+
+.brand-underline {
+  @apply w-20 h-1.5 rounded-full mt-4;
+  background-image: linear-gradient(135deg, #3F7D1D 0%, #ACC625 100%);
+}
+
+/* Gradient text for LIGHT backgrounds (mid green → dark green) */
+.text-gradient {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(135deg, #3F7D1D 0%, #1A4413 100%);
+}
+
+/* Gradient text for DARK backgrounds (lime → light lime) */
+.text-gradient-light {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(135deg, #ACC625 0%, #D6E86B 100%);
+}
+
+/* Buttons */
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 text-white px-7 py-3 rounded-full font-semibold shadow-glow hover:shadow-[0_0_50px_-6px_rgba(63,125,29,0.6)] hover:-translate-y-0.5 transition-all duration-300;
+  background-image: linear-gradient(135deg, #3F7D1D 0%, #1A4413 100%);
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center gap-2 border-2 border-white/70 text-white px-7 py-3 rounded-full font-semibold hover:bg-white hover:text-brand-greenDark transition-all duration-300;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 border-2 border-brand-green text-brand-green px-7 py-3 rounded-full font-semibold hover:bg-brand-green hover:text-white transition-all duration-300;
+}
+
+/* Card base */
+.card {
+  @apply bg-white rounded-3xl border border-gray-100 shadow-soft;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Subtle dot background */
+.dot-grid {
+  background-image: radial-gradient(rgba(63,125,29,0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #F1F2E4; }
+::-webkit-scrollbar-thumb { background: #3F7D1D; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #1A4413; }
+
+/* Fill-on-hover "Book Now" button */
+.btn-book {
+  position: relative;
+  z-index: 1;
+  padding: 0.7rem 1.5rem;
+  border-radius: 15px;
+  background: #1A4413;
+  color: #FDFDE3;
+  font-weight: 800;
+  font-size: 0.95rem;
+  overflow: hidden;
+  box-shadow: 4px 8px 19px -3px rgba(26, 68, 19, 0.35);
+  transition: all 250ms;
+}
+.btn-book::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 15px;
+  background-color: #ACC625;
+  z-index: -1;
+  transition: all 250ms;
+}
+.btn-book:hover {
+  color: #1A4413;
+}
+.btn-book:hover::before {
+  width: 100%;
+}
